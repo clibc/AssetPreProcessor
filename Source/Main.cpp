@@ -50,10 +50,10 @@ struct edgy_font_file
 
 struct edgy_image_file
 {
-	int Magic;
-	int Width;
-	int Height;
-	unsigned char* Pixels;
+    int Magic;
+    int Width;
+    int Height;
+    unsigned char* Pixels;
 };
 
 int
@@ -62,25 +62,25 @@ main(int Argc, char** Argv)
     if(Argc >= 3 && strcmp(Argv[1], "-font") == 0)
     {
         // NOTE: at this point we assume that 3rd argument is filepath
-		char* FontName = Argv[2];
+        char* FontName = Argv[2];
         printf("%s\n", FontName);
-		if (strlen(FontName) > 996)
-		{
-			printf("Too big font name: %s\n", FontName);
-			return -1;
-		}
-		DoFont(FontName);
+        if (strlen(FontName) > 996)
+        {
+            printf("Too big font name: %s\n", FontName);
+            return -1;
+        }
+        DoFont(FontName);
     }
-	else if(Argc >= 3 && strcmp(Argv[1], "-png") == 0)
-	{
-		char* FileName = Argv[2];
-		if (strlen(FileName) > 996)
-		{
-			printf("Too big file name: %s\n", FileName);
-			return -1;
-		}
+    else if(Argc >= 3 && strcmp(Argv[1], "-png") == 0)
+    {
+        char* FileName = Argv[2];
+        if (strlen(FileName) > 996)
+        {
+            printf("Too big file name: %s\n", FileName);
+            return -1;
+        }
         DoPng(FileName);   
-	}
+    }
     else
     {
         printf("Wrong usage!\nExample:\nprogram.exe -font \"[fontname]\"\nprogram.exe -png \"[filename]\"");
@@ -239,19 +239,19 @@ DoPng(char* FilePath)
 {
     int X, Y, N;
     unsigned char* Data = stbi_load(FilePath, &X, &Y, &N, 0);
-	if(Data == NULL)
-	{
-		printf("Failed to load file %s\n", FilePath);
-		return;
-	}
-	char FileName[1000];
-	sprintf_s(FileName, "%s.edgy", GetFileNameFromPath(FilePath));
-	BeginFileWrite(FileName);
-	AddToFile(&MAGIC, sizeof(int));
-	AddToFile(&X, sizeof(int));
-	AddToFile(&Y, sizeof(int));
+    if(Data == NULL)
+    {
+        printf("Failed to load file %s\n", FilePath);
+        return;
+    }
+    char FileName[1000];
+    sprintf_s(FileName, "%s.edgy", GetFileNameFromPath(FilePath));
+    BeginFileWrite(FileName);
+    AddToFile(&MAGIC, sizeof(int));
+    AddToFile(&X, sizeof(int));
+    AddToFile(&Y, sizeof(int));
     AddToFile(Data, sizeof(int) * X * Y);
-	EndFileWrite();
+    EndFileWrite();
     printf("Saved image to file %s\n", FileName);
 }
 
