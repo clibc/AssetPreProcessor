@@ -203,10 +203,11 @@ DoFont(char* FontName)
     SIZE SpaceSize = {};
     GetTextExtentPoint32A(DeviceContext, &SpaceChar, 1, &SpaceSize);
 
-    // Make alpha channel same as same as r,g,b channels
+    // Make r,g,b 255 and store alpha
     for(int I = 0; I < BitmapHeight * BitmapWidth; ++I)
     {
         BitmapMem[I] = BitmapMem[I] | BitmapMem[I] << 24;
+        BitmapMem[I] = BitmapMem[I] | 0x00FFFFFF;
     }
 
     int GlyphCount = 94;
